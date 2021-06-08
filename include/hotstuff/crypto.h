@@ -71,12 +71,17 @@ using part_cert_bt = BoxObj<PartCert>;
 using quorum_cert_bt = BoxObj<QuorumCert>;
 
 class PubKeyDummy: public PubKey {
+    public:
+    PubKeyDummy() = default;
+    PubKeyDummy(const bytearray_t &raw_bytes) {}
     PubKeyDummy *clone() override { return new PubKeyDummy(*this); }
     void serialize(DataStream &) const override {}
     void unserialize(DataStream &) override {}
 };
 
 class PrivKeyDummy: public PrivKey {
+    public:
+    PrivKeyDummy(const bytearray_t &raw_bytes) {}
     pubkey_bt get_pubkey() const override { return new PubKeyDummy(); }
     void serialize(DataStream &) const override {}
     void unserialize(DataStream &) override {}
@@ -86,8 +91,10 @@ class PrivKeyDummy: public PrivKey {
 class PartCertDummy: public PartCert {
     uint256_t obj_hash;
     public:
-    PartCertDummy() {}
+    PartCertDummy() = default;
     PartCertDummy(const uint256_t &obj_hash):
+        obj_hash(obj_hash) {}
+    PartCertDummy(const PrivKeyDummy &priv_key, const uint256_t &obj_hash):
         obj_hash(obj_hash) {}
 
     void serialize(DataStream &s) const override {

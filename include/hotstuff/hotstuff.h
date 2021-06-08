@@ -306,7 +306,7 @@ class HotStuff: public HotStuffBase {
     }
 };
 
-using HotStuffNoSig = HotStuff<>;
+using HotStuffNoSig = HotStuff<PrivKeyDummy, PubKeyDummy, PartCertDummy, QuorumCertDummy>;
 using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1,
                                     PartCertSecp256k1, QuorumCertSecp256k1>;
 
